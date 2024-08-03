@@ -1,12 +1,12 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Controller, Get, Render } from '@nestjs/common';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
-
+  @Render('index')
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  getHello(): Record<string, string> {
+    return {
+      title: 'Hello World 2024!',
+    };
   }
 }

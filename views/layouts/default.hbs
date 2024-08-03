@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="description" content="Angular tech book RAG powed by gemma 2 LLM." />
+    <meta name="author" content="Connie Leung" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{{ title }}}</title>
+    <style>
+      *, *::before, *::after {
+          padding: 0;
+          margin: 0;
+          box-sizing: border-box;
+      }
+    </style>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+  </head>
+  <body class="p-4 w-screen h-screen min-h-full">
+    <script src="https://unpkg.com/htmx.org@2.0.1" integrity="sha384-QWGpdj554B4ETpJJC9z+ZHJcA/i59TyjxEPXiiUgN2WmTyV5OEZWCD6gQhgkdpB/" crossorigin="anonymous"></script>
+    <div class="h-full grid grid-rows-[70px_1fr_40px] grid-cols-[1fr]">
+      {{> header }}
+      {{{ body }}}
+      {{> footer }}
+    </div>
+  </body>
+</html>
