@@ -13,4 +13,8 @@ export default () => ({
     version: process.env.SWAGGER_VERSION || '',
     tag: process.env.SWAGGER_TAG || '',
   },
+  wikipedia: {
+    topKResults: parseInt(process.env.WIKIPEDIA_TOP_K_RESULTS || '3', 10),
+    maxDocContentLength: parseInt(process.env.WIKIPEDIA_MAX_DOC_CONTENT_LENGTH || '7000', 10),
+  },
 });
