@@ -1,3 +1,3 @@
-export interface Tool {
+export interface ToolExecutor {
   execute(argument: unknown): any;
 }

@@ -1,2 +1,2 @@
-export const WIKIPEDIA_TOOL_TOKEN = 'WIKIPEDIA_TOOL_TOKEN';
 export const TOOLS = 'TOOLS';
+export const TOOLS_BY_NAME = 'TOOLS_BY_NAME';
