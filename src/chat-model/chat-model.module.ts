@@ -1,18 +1,11 @@
 import { Module } from '@nestjs/common';
+import { AgentExecutorService } from './application/agent-executor.service';
 import { AgentExecutorProvider } from './application/providers/agent-executor.provider';
-import { GroqChatModelProvider, GroqChatModelToolsProvider } from './application/providers/groq-chat-model.provider';
-import { ToolsByNameProvider, ToolsProvider } from './application/providers/wiki-tool.provider';
-import { WikiToolService } from './application/wiki-tool.service';
+import { GroqChatModelProvider } from './application/providers/groq-chat-model.provider';
+import { ToolsProvider } from './application/providers/tools.provider';
 
 @Module({
-  providers: [
-    AgentExecutorProvider,
-    GroqChatModelToolsProvider,
-    GroqChatModelProvider,
-    WikiToolService,
-    ToolsProvider,
-    ToolsByNameProvider,
-  ],
-  exports: [WikiToolService, GroqChatModelProvider],
+  providers: [AgentExecutorProvider, GroqChatModelProvider, AgentExecutorService, ToolsProvider],
+  exports: [AgentExecutorService],
 })
 export class ChatModelModule {}

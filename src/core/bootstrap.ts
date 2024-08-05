@@ -41,12 +41,10 @@ export class Bootstrap {
 
   setupSwagger() {
     const config = new DocumentBuilder()
-      .setTitle('Langchain Wikipedia Summarizer')
-      .setDescription(
-        'Use Langchain Wikipedia tool to search wikipedia and then use Gemma 2 LLM to generate a summary.',
-      )
-      .setVersion('1.0')
-      .addTag('Gemma 2, Langchain.js, Wikipedia Tool')
+      .setTitle(this.configService.get('swagger.title'))
+      .setDescription(this.configService.get('swagger.description'))
+      .setVersion(this.configService.get('swagger.version'))
+      .addTag(this.configService.get('swagger.tag'))
       .build();
     const document = SwaggerModule.createDocument(this.app, config);
     SwaggerModule.setup('api', this.app, document);

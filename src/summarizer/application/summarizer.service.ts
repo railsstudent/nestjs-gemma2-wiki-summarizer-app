@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { WikiToolService } from '~chat-model/application/wiki-tool.service';
+import { AgentExecutorService } from '~chat-model/application/agent-executor.service';
 
 @Injectable()
 export class SummarizerService {
-  constructor(private service: WikiToolService) {
-    this.service.execute('Stardom wrestling').then((result) => console.log(result));
+  constructor(private service: AgentExecutorService) {}
+
+  getSummary() {
+    return this.service.execute('What is the capital of France?');
   }
 }
