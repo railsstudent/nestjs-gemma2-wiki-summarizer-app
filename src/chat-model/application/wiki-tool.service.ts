@@ -14,8 +14,6 @@ export class WikiToolService implements ToolExecutor {
 
   async execute(query: unknown): Promise<string> {
     const aiMessage = await this.llmWithTools.invoke(query as string);
-    // console.log(aiMessage);
-    // console.log(this.toolByNames);
     if (aiMessage.content) {
       return aiMessage.content;
     }
@@ -23,7 +21,7 @@ export class WikiToolService implements ToolExecutor {
     if (aiMessage.tool_calls) {
       for (const toolCall of aiMessage.tool_calls) {
         const selectedTool = this.toolByNames[toolCall.name];
-        // console.log(selectedTool);
+        console.log(selectedTool.name);
         const toolMessage = await selectedTool.invoke(toolCall);
         console.log(toolMessage.content);
       }

@@ -1,4 +1,3 @@
-import { DuckDuckGoSearch } from '@langchain/community/tools/duckduckgo_search';
 import { WikipediaQueryRun } from '@langchain/community/tools/wikipedia_query_run';
 import { Tool } from '@langchain/core/tools';
 import { Inject, Provider } from '@nestjs/common';
@@ -15,8 +14,7 @@ export const ToolsProvider: Provider<Tool[]> = {
       maxDocContentLength,
     });
 
-    const searchTool = new DuckDuckGoSearch({ maxResults: 1 });
-    return [wikiTool, searchTool];
+    return [wikiTool];
   },
   inject: [ConfigService],
 };

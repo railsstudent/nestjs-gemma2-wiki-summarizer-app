@@ -5,7 +5,7 @@ import { ThrottlerGuard } from '@nestjs/throttler';
 import configuration from '~configs/configuration';
 import { throttlerConfig } from '~configs/throttler.config';
 import { AppController } from './app.controller';
-import { ChatModelModule } from './chat-model/chat-model.module';
+import { SummarizerModule } from './summarizer/summarizer.module';
 
 @Module({
   imports: [
@@ -14,7 +14,7 @@ import { ChatModelModule } from './chat-model/chat-model.module';
       isGlobal: true,
       load: [configuration],
     }),
-    ChatModelModule,
+    SummarizerModule,
   ],
   controllers: [AppController],
   providers: [
