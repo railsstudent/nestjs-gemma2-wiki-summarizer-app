@@ -2,13 +2,13 @@ import { Runnable } from '@langchain/core/runnables';
 import { Tool } from '@langchain/core/tools';
 import { Injectable } from '@nestjs/common';
 import { ToolExecutor } from './interfaces/tool.interface';
-import { InjectChatModel } from './providers/groq-chat-model.provider';
+import { InjectChatModelTools } from './providers/groq-chat-model.provider';
 import { InjectToolsByName } from './providers/wiki-tool.provider';
 
 @Injectable()
 export class WikiToolService implements ToolExecutor {
   constructor(
-    @InjectChatModel() private llmWithTools: Runnable,
+    @InjectChatModelTools() private llmWithTools: Runnable,
     @InjectToolsByName() private toolByNames: Record<string, Tool>,
   ) {}
 
