@@ -1,4 +1,4 @@
-import { ConversationContent } from '~rag-tech-book/application/types/conversation-content.type';
+import { AgentContent } from '../types/agent-content.type';
 
 const commonStyleClasses = 'p-1 border border-solid border-[#464646]';
 
@@ -9,7 +9,7 @@ const splitLines = (content: string): string => {
   </p>`;
 };
 
-export const toDivRow = (contents: ConversationContent[]): string => {
+export const toDivRow = (contents: AgentContent[]): string => {
   return contents
     .map(
       ({ role, content }) => `

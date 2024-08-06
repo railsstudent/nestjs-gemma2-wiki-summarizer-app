@@ -1,7 +1,8 @@
 import { Body, Controller, HttpStatus, Post } from '@nestjs/common';
 import { ApiBody, ApiResponse } from '@nestjs/swagger';
 import { AskDto } from '../dtos/ask.dto';
-import { AgentExecutorService } from '~chat-model/application/agent-executor.service';
+import { AgentExecutorService } from '~agent/application/agent-executor.service';
+import { toDivRow } from '~agent/application/formatters/response.-formatter';
 
 @Controller('agent')
 export class AgentController {
@@ -27,20 +28,19 @@ export class AgentController {
       },
       basketball: {
         value: {
-          query: 'Generative AI',
+          query: 'What is Generative AI?',
         },
       },
     },
   })
   @ApiResponse({
-    description: 'Generate answer in a rag aplication about technology book',
+    description: 'Use langchain agent to look up answer of an inquiry',
     type: String,
     status: HttpStatus.CREATED,
   })
   @Post()
   async ask(@Body() dto: AskDto): Promise<string> {
-    await this.service.execute(dto.query);
-    //return toDivRow(conversation);
-    return '';
+    const contents = await this.service.execute(dto.query);
+    return toDivRow(contents);
   }
 }

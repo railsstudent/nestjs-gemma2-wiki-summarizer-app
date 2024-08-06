@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard } from '@nestjs/throttler';
+import { AgentModule } from '~agent/agent.module';
 import configuration from '~configs/configuration';
 import { throttlerConfig } from '~configs/throttler.config';
 import { AppController } from './app.controller';
-import { SummarizerModule } from './summarizer/summarizer.module';
 
 @Module({
   imports: [
@@ -14,7 +14,7 @@ import { SummarizerModule } from './summarizer/summarizer.module';
       isGlobal: true,
       load: [configuration],
     }),
-    SummarizerModule,
+    AgentModule,
   ],
   controllers: [AppController],
   providers: [

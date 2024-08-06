@@ -10,4 +10,4 @@ import { AgentController } from './presentaters/http/agent.controller';
   exports: [AgentExecutorService],
   controllers: [AgentController],
 })
-export class ChatModelModule {}
+export class AgentModule {}
