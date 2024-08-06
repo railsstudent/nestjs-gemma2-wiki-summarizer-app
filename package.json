@@ -23,8 +23,10 @@
     "commitlint": "commitlint --edit $1"
   },
   "dependencies": {
+    "@google/generative-ai": "0.16.0",
     "@langchain/community": "0.2.23",
     "@langchain/core": "0.2.20",
+    "@langchain/google-genai": "0.0.24",
     "@langchain/groq": "0.0.15",
     "@nestjs/common": "10.3.10",
     "@nestjs/config": "3.2.3",
