@@ -9,7 +9,7 @@ const splitLines = (content: string): string => {
   </p>`;
 };
 
-export const toDivRow = (contents: AgentContent[]): string => {
+export const toDivRows = (contents: AgentContent[]): string => {
   return contents
     .map(
       ({ role, content }) => `
@@ -19,4 +19,8 @@ export const toDivRow = (contents: AgentContent[]): string => {
       </div>`,
     )
     .join('');
+};
+
+export const toListItems = (items: string[]): string => {
+  return items.map((item) => `<li class="text-[1rem]">${item}</li>`).join('\n');
 };

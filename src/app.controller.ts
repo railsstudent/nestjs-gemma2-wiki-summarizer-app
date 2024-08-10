@@ -6,7 +6,7 @@ export class AppController {
   @Get()
   async getHello(): Promise<Record<string, string>> {
     return {
-      title: 'Wiki Summarizer',
+      title: 'Langchain Search Agent',
     };
   }
 }

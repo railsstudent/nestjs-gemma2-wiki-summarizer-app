@@ -1,15 +1,11 @@
 <div>
     <div class="mb-2 p-1 border border-solid border-[#464646] rounded-lg">
         <p class="text-[1.25rem] mb-2 text-[#464646] underline">Architecture</p>
-        <ul>
-            <li class="text-[1rem]">Chat Model: Groq</li>
-            <li class="text-[1rem]">LLM: Gemma 2</li>
-            <li class="text-[1rem]">Tools: DuckDuckGoSearch and Angular Signal Retriever</li>
-            <li class="text-[1rem]">Legacy Agent Executor</li>
-        </ul>
+        <ul id="architecture" hx-trigger="load" hx-get="/agent/architecture" 
+            hx-target="#architecture" hx-swap="innerHTML"></ul>
     </div>
-    <div id="tool-result" class="mb-4 h-[300px] overflow-y-auto overflow-x-auto"></div>
-    <form id="rag-form" hx-post="/agent" hx-target="#tool-result" hx-swap="innerHTML swap:1s">
+    <div id="results" class="mb-4 h-[300px] overflow-y-auto overflow-x-auto"></div>
+    <form id="rag-form" hx-post="/agent" hx-target="#results" hx-swap="innerHTML swap:1s">
         <div>
             <label>
                 <span class="text-[1rem] mr-1 w-1/5 mb-2 text-[#464646]">Question: </span>

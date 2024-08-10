@@ -1,8 +1,8 @@
-import { Body, Controller, HttpStatus, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Post } from '@nestjs/common';
 import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AskDto } from '../dtos/ask.dto';
 import { AgentExecutorService } from '~agent/application/agent-executor.service';
-import { toDivRow } from '~agent/application/formatters/response.-formatter';
+import { toDivRows, toListItems } from '~agent/application/formatters/response.-formatter';
 
 @ApiTags('Agent Tools')
 @Controller('agent')
@@ -47,6 +47,21 @@ export class AgentController {
   @Post()
   async ask(@Body() dto: AskDto): Promise<string> {
     const contents = await this.service.execute(dto.query);
-    return toDivRow(contents);
+    return toDivRows(contents);
+  }
+
+  @ApiResponse({
+    description: 'Retrieve the architecture of th application',
+    type: String,
+    status: HttpStatus.OK,
+  })
+  @Get('architecture')
+  async getArchitecture(): Promise<string> {
+    return toListItems([
+      'Chat Model: Groq',
+      'LLM: Gemma 2',
+      'Tools: DuckDuckGoSearch, DragonBall tool, and Angular Signal Retriever',
+      'Agent: Legacy Agent Executor',
+    ]);
   }
 }
