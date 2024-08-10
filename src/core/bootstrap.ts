@@ -6,9 +6,10 @@ import compression from 'compression';
 import express from 'express';
 import hbs from 'hbs';
 import { join } from 'path';
-import { AppModule } from '../app.module';
 import { appConfig } from '~configs/root-path.config';
 import { validateConfig } from '~configs/validate.config';
+import { AppModule } from '../app.module';
+import { SwaggerConfig } from './types/swagger.type';
 
 export class Bootstrap {
   private app: NestExpressApplication;
@@ -40,11 +41,12 @@ export class Bootstrap {
   }
 
   setupSwagger() {
+    const { title, description, version, tag } = this.configService.get<SwaggerConfig>('swagger');
     const config = new DocumentBuilder()
-      .setTitle(this.configService.get('swagger.title'))
-      .setDescription(this.configService.get('swagger.description'))
-      .setVersion(this.configService.get('swagger.version'))
-      .addTag(this.configService.get('swagger.tag'))
+      .setTitle(title)
+      .setDescription(description)
+      .setVersion(version)
+      .addTag(tag)
       .build();
     const document = SwaggerModule.createDocument(this.app, config);
     SwaggerModule.setup('api', this.app, document);

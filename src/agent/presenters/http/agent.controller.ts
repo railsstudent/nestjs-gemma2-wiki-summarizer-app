@@ -1,9 +1,10 @@
 import { Body, Controller, HttpStatus, Post } from '@nestjs/common';
-import { ApiBody, ApiResponse } from '@nestjs/swagger';
+import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AskDto } from '../dtos/ask.dto';
 import { AgentExecutorService } from '~agent/application/agent-executor.service';
 import { toDivRow } from '~agent/application/formatters/response.-formatter';
 
+@ApiTags('Agent Tools')
 @Controller('agent')
 export class AgentController {
   constructor(private service: AgentExecutorService) {}
@@ -26,9 +27,14 @@ export class AgentController {
           query: 'Please write a paragraph about the history of Hong Kong.',
         },
       },
-      basketball: {
+      generativeAI: {
         value: {
           query: 'What is Generative AI?',
+        },
+      },
+      langGraph: {
+        value: {
+          query: 'What is langGraph used for?',
         },
       },
     },

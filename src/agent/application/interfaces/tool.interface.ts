@@ -1,3 +1,5 @@
+import { AgentContent } from '../types/agent-content.type';
+
 export interface ToolExecutor {
-  execute(argument: unknown): any;
+  execute(argument: string): Promise<AgentContent[]>;
 }
