@@ -4,7 +4,6 @@ import { AgentExecutorService } from '~agent/application/agent-executor.service'
 import { DragonBallService } from '~agent/application/dragon-ball.service';
 import { toDivRows, toListItems } from '~agent/application/formatters/response.-formatter';
 import { CharacterFilter } from '~agent/application/types/character-filter.type';
-import { CharacterAnswer } from '~agent/application/types/character.type';
 import { AskDto } from '../dtos/ask.dto';
 
 @ApiTags('Agent Tools')
@@ -120,12 +119,11 @@ export class AgentController {
   })
   @ApiResponse({
     description: 'Retrieve dragon ball Z characters',
-    type: Object,
-    isArray: true,
+    type: String,
     status: HttpStatus.OK,
   })
   @Post('dragon')
-  async getCharacters(@Body() characterFilter: CharacterFilter): Promise<CharacterAnswer[]> {
+  async getCharacters(@Body() characterFilter: CharacterFilter): Promise<string> {
     return this.dragonBallService.getCharacters(characterFilter);
   }
 }

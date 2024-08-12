@@ -3,7 +3,7 @@ import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { z } from 'zod';
 import { CharacterFilter } from './types/character-filter.type';
-import { Character, CharacterAnswer } from './types/character.type';
+import { Character } from './types/character.type';
 
 export const characterFilterSchema = z.object({
   name: z.string().optional().describe('Name of a Dragon Ball Z character.'),
@@ -48,50 +48,50 @@ export const characterFilterSchema = z.object({
 export class DragonBallService {
   constructor(private readonly httpService: HttpService) {}
 
-  async getCharacters(characterFilter: CharacterFilter): Promise<CharacterAnswer[]> {
+  async getCharacters(characterFilter: CharacterFilter): Promise<string> {
     const filter = this.buildFilter(characterFilter);
 
     if (!filter) {
-      return this.generateText([]);
+      return this.generateMarkdownList([]);
     }
 
     const characters = await this.httpService.axiosRef
       .get<Character[]>(`https://dragonball-api.com/api/characters?${filter}`)
       .then(({ data }) => data);
 
-    return this.generateText(characters);
+    return this.generateMarkdownList(characters);
   }
 
   createCharactersFilterTool(): DynamicStructuredTool<any> {
-    return tool(async (input: CharacterFilter): Promise<CharacterAnswer[]> => this.getCharacters(input), {
+    return tool(async (input: CharacterFilter): Promise<string> => this.getCharacters(input), {
       name: 'dragonBallCharacters',
       description: `Call Dragon Ball filter characters API to retrieve characters by name, race, affiliation, or gender.`,
       schema: characterFilterSchema,
     });
   }
 
-  private generateText(characters: Character[]): CharacterAnswer[] {
+  private generateMarkdownList(characters: Character[]): string {
     if (!characters || !characters.length) {
-      return [
-        {
-          text: 'No result',
-          image: '/images/person_placeholder.png',
-        },
-      ];
+      return '* No result';
     }
 
-    return characters.map((character) => {
-      const pronoun =
-        character.gender === 'Female' ? { lowerCase: 'her', camelCase: 'Her' } : { lowerCase: 'his', camelCase: 'His' };
-      const status = character.deletedAt ? 'dead' : 'alive';
-      const { name, race, affiliation, ki, maxKi } = character;
-      return {
-        text: `The character is ${name}, ${pronoun.lowerCase} Ki is ${ki} and the maximum Ki is ${maxKi}. 
-          ${pronoun.camelCase} race is ${race} and ${pronoun.lowerCase} affiliation is ${affiliation}. 
-          According to the data, ${pronoun.lowerCase} is ${status}.`,
-        image: character.image,
-      };
-    });
+    return characters
+      .map((character) => {
+        const pronoun =
+          character.gender === 'Female'
+            ? { lowerCase: 'her', camelCase: 'Her' }
+            : { lowerCase: 'his', camelCase: 'His' };
+        const status = character.deletedAt ? 'dead' : 'alive';
+        const { name, race, affiliation, ki, maxKi, image } = character;
+
+        const markdown = `
+  * ${name}
+    * ${pronoun.camelCase} Ki is ${ki} and the maximum Ki is ${maxKi}. ${pronoun.camelCase} race is ${race} and ${pronoun.lowerCase} affiliation is ${affiliation}. According to the data, ${pronoun.lowerCase} is ${status}.
+    * ![Image of ${name}](${image} "${name}")
+`;
+        return markdown;
+      })
+      .join('\n');
   }
 
   private buildFilter(characterFilter: CharacterFilter) {
