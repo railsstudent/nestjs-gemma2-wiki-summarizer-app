@@ -1,13 +1,54 @@
+import { DynamicStructuredTool, tool } from '@langchain/core/tools';
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
+import { z } from 'zod';
 import { CharacterFilter } from './types/character-filter.type';
 import { Character, CharacterAnswer } from './types/character.type';
+
+export const characterFilterSchema = z.object({
+  name: z.string().optional().describe('Name of a Dragon Ball character.'),
+  gender: z.enum(['Male', 'Female', 'Unknown']).optional().describe('Gender of a Dragon Ball character.'),
+  race: z
+    .enum([
+      'Human',
+      'Saiyan',
+      'Namekian',
+      'Majin',
+      'Frieza Race',
+      'Android',
+      'Jiren Race',
+      'God',
+      'Angel',
+      'Evil',
+      'Nucleico',
+      'Nucleico benigno',
+      'Unknown',
+    ])
+    .optional()
+    .describe('Race of a Dragon Ball character'),
+  affiliation: z
+    .enum([
+      'Z Fighter',
+      'Red Ribbon Army',
+      'Namekian Warrior',
+      'Freelancer',
+      'Army of Frieza',
+      'Pride Troopers',
+      'Assistant of Vermoud',
+      'God',
+      'Assistant of Beerus',
+      'Villain',
+      'Other',
+    ])
+    .optional()
+    .describe('Affiliation of a Dragon Ball character.'),
+});
 
 @Injectable()
 export class DragonBallService {
   constructor(private readonly httpService: HttpService) {}
 
-  async getCharacters(characterFilter: CharacterFilter): Promise<CharacterAnswer[]> {
+  private async getCharacters(characterFilter: CharacterFilter): Promise<CharacterAnswer[]> {
     const filter = this.buildFilter(characterFilter);
 
     if (!filter) {
@@ -19,6 +60,20 @@ export class DragonBallService {
       .then(({ data }) => data);
 
     return this.generateText(characters);
+  }
+
+  createCharactersFilterTool(): DynamicStructuredTool<any> {
+    return tool(
+      async (input: CharacterFilter): Promise<CharacterAnswer[]> => {
+        return this.getCharacters(input);
+      },
+      {
+        name: 'dragonBallCharacters',
+        description:
+          'Call Dragon Ball filter characters API to retrieve characters by name, race, affiliation, or gender.',
+        schema: characterFilterSchema,
+      },
+    );
   }
 
   private generateText(characters: Character[]): CharacterAnswer[] {
