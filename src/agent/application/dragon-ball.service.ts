@@ -6,8 +6,8 @@ import { CharacterFilter } from './types/character-filter.type';
 import { Character, CharacterAnswer } from './types/character.type';
 
 export const characterFilterSchema = z.object({
-  name: z.string().optional().describe('Name of a Dragon Ball character.'),
-  gender: z.enum(['Male', 'Female', 'Unknown']).optional().describe('Gender of a Dragon Ball character.'),
+  name: z.string().optional().describe('Name of a Dragon Ball Z character.'),
+  gender: z.enum(['Male', 'Female', 'Unknown']).optional().describe('Gender of a Dragon Ball Z caracter.'),
   race: z
     .enum([
       'Human',
@@ -25,7 +25,7 @@ export const characterFilterSchema = z.object({
       'Unknown',
     ])
     .optional()
-    .describe('Race of a Dragon Ball character'),
+    .describe('Race of a Dragon Ball Z character'),
   affiliation: z
     .enum([
       'Z Fighter',
@@ -41,14 +41,14 @@ export const characterFilterSchema = z.object({
       'Other',
     ])
     .optional()
-    .describe('Affiliation of a Dragon Ball character.'),
+    .describe('Affiliation of a Dragon Ball Z character.'),
 });
 
 @Injectable()
 export class DragonBallService {
   constructor(private readonly httpService: HttpService) {}
 
-  private async getCharacters(characterFilter: CharacterFilter): Promise<CharacterAnswer[]> {
+  async getCharacters(characterFilter: CharacterFilter): Promise<CharacterAnswer[]> {
     const filter = this.buildFilter(characterFilter);
 
     if (!filter) {
@@ -56,24 +56,18 @@ export class DragonBallService {
     }
 
     const characters = await this.httpService.axiosRef
-      .get<Character[]>(`https://www.dragonball-api.com/api/characters?${filter}`)
+      .get<Character[]>(`https://dragonball-api.com/api/characters?${filter}`)
       .then(({ data }) => data);
 
     return this.generateText(characters);
   }
 
   createCharactersFilterTool(): DynamicStructuredTool<any> {
-    return tool(
-      async (input: CharacterFilter): Promise<CharacterAnswer[]> => {
-        return this.getCharacters(input);
-      },
-      {
-        name: 'dragonBallCharacters',
-        description:
-          'Call Dragon Ball filter characters API to retrieve characters by name, race, affiliation, or gender.',
-        schema: characterFilterSchema,
-      },
-    );
+    return tool(async (input: CharacterFilter): Promise<CharacterAnswer[]> => this.getCharacters(input), {
+      name: 'dragonBallCharacters',
+      description: `Call Dragon Ball filter characters API to retrieve characters by name, race, affiliation, or gender.`,
+      schema: characterFilterSchema,
+    });
   }
 
   private generateText(characters: Character[]): CharacterAnswer[] {
@@ -90,11 +84,10 @@ export class DragonBallService {
       const pronoun =
         character.gender === 'Female' ? { lowerCase: 'her', camelCase: 'Her' } : { lowerCase: 'his', camelCase: 'His' };
       const status = character.deletedAt ? 'dead' : 'alive';
-      const { name, description, race, affiliation, ki, maxKi } = character;
+      const { name, race, affiliation, ki, maxKi } = character;
       return {
         text: `The character is ${name}, ${pronoun.lowerCase} Ki is ${ki} and the maximum Ki is ${maxKi}. 
           ${pronoun.camelCase} race is ${race} and ${pronoun.lowerCase} affiliation is ${affiliation}. 
-          Spanish description: ${description}
           According to the data, ${pronoun.lowerCase} is ${status}.`,
         image: character.image,
       };

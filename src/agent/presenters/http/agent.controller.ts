@@ -1,13 +1,19 @@
 import { Body, Controller, Get, HttpStatus, Post } from '@nestjs/common';
 import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { AskDto } from '../dtos/ask.dto';
 import { AgentExecutorService } from '~agent/application/agent-executor.service';
+import { DragonBallService } from '~agent/application/dragon-ball.service';
 import { toDivRows, toListItems } from '~agent/application/formatters/response.-formatter';
+import { CharacterFilter } from '~agent/application/types/character-filter.type';
+import { CharacterAnswer } from '~agent/application/types/character.type';
+import { AskDto } from '../dtos/ask.dto';
 
 @ApiTags('Agent Tools')
 @Controller('agent')
 export class AgentController {
-  constructor(private service: AgentExecutorService) {}
+  constructor(
+    private service: AgentExecutorService,
+    private dragonBallService: DragonBallService,
+  ) {}
 
   @ApiBody({
     description: 'An intance of AskDto',
@@ -63,5 +69,63 @@ export class AgentController {
       'Tools: DuckDuckGoSearch, DragonBall tool, and Angular Signal Retriever',
       'Agent: Legacy Agent Executor',
     ]);
+  }
+
+  @ApiBody({
+    description: 'An intance of CharacterFilter',
+    required: true,
+    schema: {
+      type: 'object',
+      properties: {
+        name: {
+          type: 'string',
+          description: 'name',
+          nullable: true,
+        },
+        gender: {
+          type: 'string',
+          description: 'gender',
+          nullable: true,
+        },
+        race: {
+          type: 'string',
+          description: 'race',
+          nullable: true,
+        },
+        affiliation: {
+          type: 'string',
+          description: 'affiliation',
+          nullable: true,
+        },
+      },
+    },
+    examples: {
+      gohan: {
+        value: {
+          name: 'Gohan',
+        },
+      },
+      villain: {
+        value: {
+          affiliation: 'Villain',
+        },
+      },
+      maleSaiyan: {
+        value: {
+          race: 'Saiyan',
+          gender: 'Male',
+        },
+      },
+    },
+  })
+  @ApiResponse({
+    description: 'Retrieve dragon ball Z characters',
+    type: Object,
+    isArray: true,
+    status: HttpStatus.OK,
+  })
+  @Post('dragon')
+  async getCharacters(@Body() characterFilter: CharacterFilter): Promise<CharacterAnswer[]> {
+    return this.dragonBallService.getCharacters(characterFilter);
   }
 }
