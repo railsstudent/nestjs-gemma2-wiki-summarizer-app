@@ -1,22 +1,49 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { CharacterFilter } from './types/character-filter.type';
-import { Character } from './types/character.type';
+import { Character, CharacterAnswer } from './types/character.type';
 
 @Injectable()
 export class DragonBallService {
   constructor(private readonly httpService: HttpService) {}
 
-  getCharacters(characterFilter: CharacterFilter): Promise<Character[]> {
+  async getCharacters(characterFilter: CharacterFilter): Promise<CharacterAnswer[]> {
     const filter = this.buildFilter(characterFilter);
 
     if (!filter) {
-      return Promise.resolve([]);
+      return this.generateText([]);
     }
 
-    return this.httpService.axiosRef
+    const characters = await this.httpService.axiosRef
       .get<Character[]>(`https://www.dragonball-api.com/api/characters?${filter}`)
       .then(({ data }) => data);
+
+    return this.generateText(characters);
+  }
+
+  private generateText(characters: Character[]): CharacterAnswer[] {
+    if (!characters || !characters.length) {
+      return [
+        {
+          text: 'No result',
+          image: '/images/person_placeholder.png',
+        },
+      ];
+    }
+
+    return characters.map((character) => {
+      const pronoun =
+        character.gender === 'Female' ? { lowerCase: 'her', camelCase: 'Her' } : { lowerCase: 'his', camelCase: 'His' };
+      const status = character.deletedAt ? 'dead' : 'alive';
+      const { name, description, race, affiliation, ki, maxKi } = character;
+      return {
+        text: `The character is ${name}, ${pronoun.lowerCase} Ki is ${ki} and the maximum Ki is ${maxKi}. 
+          ${pronoun.camelCase} race is ${race} and ${pronoun.lowerCase} affiliation is ${affiliation}. 
+          Spanish description: ${description}
+          According to the data, ${pronoun.lowerCase} is ${status}.`,
+        image: character.image,
+      };
+    });
   }
 
   private buildFilter(characterFilter: CharacterFilter) {

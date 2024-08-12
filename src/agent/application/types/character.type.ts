@@ -12,3 +12,8 @@ export type Character = {
   affiliation: Affiliation;
   deletedAt: Date | null;
 };
+
+export type CharacterAnswer = {
+  text: string;
+  image: string;
+};
