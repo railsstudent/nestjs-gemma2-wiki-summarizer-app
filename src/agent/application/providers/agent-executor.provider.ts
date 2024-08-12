@@ -8,7 +8,7 @@ import { GROQ_CHAT_MODEL } from '../constants/groq-chat-model.constant';
 import { TOOLS } from '../constants/tools.constant';
 
 const prompt = ChatPromptTemplate.fromMessages([
-  ['system', 'You are a helpful assistant'],
+  ['system', 'You are a helpful assistant.'],
   ['placeholder', '{chat_history}'],
   ['human', '{input}'],
   ['placeholder', '{agent_scratchpad}'],
@@ -26,7 +26,7 @@ export const AgentExecutorProvider: Provider<AgentExecutor> = {
     return AgentExecutor.fromAgentAndTools({
       agent,
       tools,
-      verbose: true,
+      verbose: false,
     });
   },
   inject: [GROQ_CHAT_MODEL, TOOLS],

@@ -75,23 +75,23 @@ export class DragonBallService {
       return '* No result';
     }
 
-    return characters
+    const markdown = characters
       .map((character) => {
+        const { name, race, affiliation, ki, maxKi, image, gender, deletedAt } = character;
         const pronoun =
-          character.gender === 'Female'
-            ? { lowerCase: 'her', camelCase: 'Her' }
-            : { lowerCase: 'his', camelCase: 'His' };
-        const status = character.deletedAt ? 'dead' : 'alive';
-        const { name, race, affiliation, ki, maxKi, image } = character;
+          gender === 'Female' ? { lowerCase: 'her', camelCase: 'Her' } : { lowerCase: 'his', camelCase: 'His' };
+        const status = deletedAt ? 'dead' : 'alive';
 
-        const markdown = `
+        return `
   * ${name}
-    * ${pronoun.camelCase} Ki is ${ki} and the maximum Ki is ${maxKi}. ${pronoun.camelCase} race is ${race} and ${pronoun.lowerCase} affiliation is ${affiliation}. According to the data, ${pronoun.lowerCase} is ${status}.
+    * ${pronoun.camelCase} Ki is ${ki} and the maximum Ki is ${maxKi}. ${pronoun.camelCase} race is ${race} and ${pronoun.lowerCase} affiliation is ${affiliation}. ${pronoun.camelCase} is ${status}.
     * ![Image of ${name}](${image} "${name}")
 `;
-        return markdown;
       })
       .join('\n');
+
+    console.log('markdown list ->', markdown);
+    return markdown;
   }
 
   private buildFilter(characterFilter: CharacterFilter) {
