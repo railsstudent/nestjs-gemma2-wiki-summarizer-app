@@ -6,6 +6,7 @@ export default () => ({
   },
   gemini: {
     apiKey: process.env.GEMINI_API_KEY || '',
+    embeddingModel: process.env.GEMINI_TEXT_EMBEDDING_MODEL || 'text-embedding-004',
   },
   swagger: {
     title: process.env.SWAGGER_TITLE || '',
