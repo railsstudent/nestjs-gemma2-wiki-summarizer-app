@@ -13,8 +13,8 @@ export const ToolsProvider: Provider<Tool[]> = {
     const { maxResults } = service.get<DuckDuckGoConfig>('duckDuckGo');
     const duckTool = new DuckDuckGoSearch({ maxResults });
     const characterFiltertool = dragonBallService.createCharactersFilterTool();
-    const signalTool = await docsService.createSignalRetrieverTool();
-    return [duckTool, characterFiltertool, signalTool];
+    const retrieverTools = await docsService.createRetrieverTools();
+    return [duckTool, characterFiltertool, ...retrieverTools];
   },
   inject: [ConfigService, DragonBallService, AngularDocsService],
 };

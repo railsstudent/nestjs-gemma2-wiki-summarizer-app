@@ -16,6 +16,23 @@ export async function loadSignalWebPages() {
     'https://angular.dev/guide/components/output-fn',
   ];
 
+  return loadWebPages(webPages);
+}
+
+export async function loadFormWebPages() {
+  const webPages = [
+    'https://angular.dev/guide/forms',
+    'https://angular.dev/guide/forms/reactive-forms',
+    'https://angular.dev/guide/forms/typed-forms',
+    'https://angular.dev/guide/forms/template-driven-forms',
+    'https://angular.dev/guide/forms/form-validation',
+    'https://angular.dev/guide/forms/dynamic-forms',
+  ];
+
+  return loadWebPages(webPages);
+}
+
+async function loadWebPages(webPages: string[]) {
   const loaders = webPages.map((page) => new CheerioWebBaseLoader(page));
   const docs = await Promise.all(loaders.map((loader) => loader.load()));
   const signalDocs = docs.flat();
