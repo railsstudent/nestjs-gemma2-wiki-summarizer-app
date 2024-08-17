@@ -6,13 +6,14 @@ const splitter = new RecursiveCharacterTextSplitter({
   chunkOverlap: 100,
 });
 
-export async function loadWebPages() {
+export async function loadSignalWebPages() {
   const webPages = [
     'https://angular.dev/guide/signals',
     'https://angular.dev/guide/signals/rxjs-interop',
     'https://angular.dev/guide/signals/inputs',
     'https://angular.dev/guide/signals/model',
     'https://angular.dev/guide/signals/queries',
+    'https://angular.dev/guide/components/output-fn',
   ];
 
   const loaders = webPages.map((page) => new CheerioWebBaseLoader(page));

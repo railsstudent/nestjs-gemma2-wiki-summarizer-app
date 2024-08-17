@@ -5,7 +5,7 @@
             hx-target="#architecture" hx-swap="innerHTML"></ul>
     </div>
     <div id="results" class="mb-4 h-[300px] overflow-y-auto overflow-x-auto"></div>
-    <form id="rag-form" hx-post="/agent" hx-target="#results" hx-swap="innerHTML swap:1s">
+    <form id="rag-form" hx-post="/agent" hx-target="#results" hx-swap="beforeend swap:1s">
         <div>
             <label>
                 <span class="text-[1rem] mr-1 w-1/5 mb-2 text-[#464646]">Question: </span>

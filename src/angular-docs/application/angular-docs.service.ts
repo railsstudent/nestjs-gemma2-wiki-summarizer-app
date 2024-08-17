@@ -4,7 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { createRetrieverTool } from 'langchain/tools/retriever';
 import { MemoryVectorStore } from 'langchain/vectorstores/memory';
 import { createTextEmbeddingModel } from './embeddings/create-embedding-model';
-import { loadWebPages } from './loaders/web-page-loader';
+import { loadSignalWebPages } from './loaders/web-page-loader';
 
 @Injectable()
 export class AngularDocsService {
@@ -12,8 +12,8 @@ export class AngularDocsService {
 
   constructor(private readonly configService: ConfigService) {}
 
-  private async loadDocuments() {
-    const docs = await loadWebPages();
+  private async loadSignalDocuments() {
+    const docs = await loadSignalWebPages();
     this.logger.log(`number of docs -> ${docs.length}`);
     // if (docs.length > 0) {
     //   const firstPage = docs[0];
@@ -24,7 +24,7 @@ export class AngularDocsService {
   }
 
   private async createSignalRetriever() {
-    const docs = await this.loadDocuments();
+    const docs = await this.loadSignalDocuments();
     const embeddings = createTextEmbeddingModel(this.configService);
     const vectorStore = await MemoryVectorStore.fromDocuments(docs, embeddings);
     return vectorStore.asRetriever();
