@@ -24,7 +24,30 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Buid an agentic RAG with Gemma 2, NestJS, Langchain.js, and HTMX 2.
+
+## Environment variables
+
+```
+PORT=3001
+GROQ_API_KEY=<GROQ API KEY>
+GROQ_MODEL=gemma2-9b-it
+GEMINI_API_KEY=<GEMINI API KEY>
+GEMINI_TEXT_EMBEDDING_MODEL=text-embedding-004
+SWAGGER_TITLE='Langchain Search Agent'
+SWAGGER_DESCRIPTION='Use Langchain tools and agent to search information on the Internet.'
+SWAGGER_VERSION='1.0'
+SWAGGER_TAG='Gemma 2, Langchain.js, Agent Tools'
+DUCK_DUCK_GO_MAX_RESULTS=1
+```
+
+## Client
+
+Navigate to http://localhost:3001
+
+## Swagger Documentation
+
+Navigate to http://localhost:3001/api
 
 ## Installation
 
@@ -57,17 +80,3 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
