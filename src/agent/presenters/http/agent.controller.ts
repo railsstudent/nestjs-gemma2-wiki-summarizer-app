@@ -65,7 +65,7 @@ export class AgentController {
     return toListItems([
       'Chat Model: Groq',
       'LLM: Gemma 2',
-      'Tools: DuckDuckGoSearch, DragonBall tool, and Angular Signal Retriever',
+      'Tools: DuckDuckGoSearch, DragonBall Z, and Angular Document retriever tools',
       'Agent: Legacy Agent Executor',
     ]);
   }
