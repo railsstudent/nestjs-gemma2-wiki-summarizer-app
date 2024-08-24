@@ -65,7 +65,7 @@ export class DragonBallService {
   createCharactersFilterTool(): DynamicStructuredTool<any> {
     return tool(async (input: CharacterFilter): Promise<string> => this.getCharacters(input), {
       name: 'dragonBallCharacters',
-      description: `Call Dragon Ball filter characters API to retrieve characters by name, race, affiliation, or gender.`,
+      description: `Call Dragon Ball Z filter characters API to retrieve characters by name, race, affiliation, or gender.`,
       schema: characterFilterSchema,
     });
   }

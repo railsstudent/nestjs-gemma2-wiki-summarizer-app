@@ -32,8 +32,10 @@ export class AngularDocsService {
     const retriever = await this.createSignalRetriever();
     return createRetrieverTool(retriever, {
       name: 'angular_signal_search',
-      description:
-        'Search for information about Angular Signal. For any questions about Angular Signal API, you must use this tool!',
+      description: `Search for information about Angular Signal. 
+         For any questions about Angular Signal API, you must use this tool!
+         Please return the answer in Markdown format. 
+         If you do not know the answer, please reply "You don't know." and stop.`,
     });
   }
 
@@ -41,8 +43,10 @@ export class AngularDocsService {
     const retriever = await this.createFormRetriever();
     return createRetrieverTool(retriever, {
       name: 'angular_form_search',
-      description:
-        'Search for information about Angular reactive, typed reactive, template-drive, and dynamic forms. For any questions about Angular Forms, you must use this tool!',
+      description: `Search for information about Angular reactive, typed reactive, template-drive, and dynamic forms. 
+         For any questions about Angular Forms, you must use this tool!
+         Please return the answer in Markdown format. 
+         If you do not know the answer, please reply "You don't know." and stop.`,
     });
   }
 

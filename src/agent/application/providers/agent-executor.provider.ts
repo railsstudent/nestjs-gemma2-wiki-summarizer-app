@@ -26,7 +26,7 @@ export const AgentExecutorProvider: Provider<AgentExecutor> = {
     return AgentExecutor.fromAgentAndTools({
       agent,
       tools,
-      verbose: false,
+      verbose: true,
     });
   },
   inject: [GROQ_CHAT_MODEL, TOOLS],
