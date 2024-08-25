@@ -33,8 +33,8 @@ export class AngularDocsService {
     return createRetrieverTool(retriever, {
       name: 'angular_signal_search',
       description: `Search for information about Angular Signal. 
-         For any questions about Angular Signal API, you must use this tool!
-         Please return the answer in Markdown format. 
+         For any questions about Angular Signal API and RxJS-interop, you must use this tool!
+         Please return the answer in markdown format. 
          If you do not know the answer, please reply "You don't know." and stop.`,
     });
   }
@@ -45,7 +45,7 @@ export class AngularDocsService {
       name: 'angular_form_search',
       description: `Search for information about Angular reactive, typed reactive, template-drive, and dynamic forms. 
          For any questions about Angular Forms, you must use this tool!
-         Please return the answer in Markdown format. 
+         Please return the answer in markdown format. 
          If you do not know the answer, please reply "You don't know." and stop.`,
     });
   }
