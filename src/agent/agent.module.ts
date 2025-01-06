@@ -5,20 +5,12 @@ import { AgentExecutorService } from './application/agent-executor.service';
 import { DragonBallService } from './application/dragon-ball.service';
 import { AgentExecutorProvider } from './application/providers/agent-executor.provider';
 import { GroqChatModelProvider } from './application/providers/groq-chat-model.provider';
-import { HFInferenceProvider } from './application/providers/hf-inference.provider';
 import { ToolsProvider } from './application/providers/tools.provider';
 import { AgentController } from './presenters/http/agent.controller';
 
 @Module({
   imports: [HttpModule, AngularDocsModule],
-  providers: [
-    AgentExecutorProvider,
-    GroqChatModelProvider,
-    HFInferenceProvider,
-    AgentExecutorService,
-    ToolsProvider,
-    DragonBallService,
-  ],
+  providers: [AgentExecutorProvider, GroqChatModelProvider, AgentExecutorService, ToolsProvider, DragonBallService],
   controllers: [AgentController],
 })
 export class AgentModule {}
