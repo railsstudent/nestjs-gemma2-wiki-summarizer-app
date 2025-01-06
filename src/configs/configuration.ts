@@ -17,4 +17,8 @@ export default () => ({
   duckDuckGo: {
     maxResults: parseInt(process.env.DUCK_DUCK_GO_MAX_RESULTS || '1', 10),
   },
+  huggingface: {
+    apiKey: process.env.HUGGINGFACE_API_KEY || '',
+    model: process.env.HUGGINGFACE_MODEL || 'google/gemma-2-9b-it',
+  },
 });

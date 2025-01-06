@@ -9,11 +9,12 @@ const splitter = new RecursiveCharacterTextSplitter({
 export async function loadSignalWebPages() {
   const webPages = [
     'https://angular.dev/guide/signals',
-    'https://angular.dev/guide/signals/rxjs-interop',
-    'https://angular.dev/guide/signals/inputs',
-    'https://angular.dev/guide/signals/model',
-    'https://angular.dev/guide/signals/queries',
-    'https://angular.dev/guide/components/output-fn',
+    'https://angular.dev/guide/signals/linked-signal',
+    'https://angular.dev/guide/signals/resource',
+    'https://angular.dev/ecosystem/rxjs-interop',
+    'https://angular.dev/guide/components/inputs',
+    'https://angular.dev/guide/components/queries',
+    'https://angular.dev/guide/components/outputs',
   ];
 
   return loadWebPages(webPages);

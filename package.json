@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@google/generative-ai": "0.21.0",
+    "@huggingface/inference": "^2.8.1",
     "@langchain/community": "0.3.22",
     "@langchain/core": "0.3.27",
     "@langchain/google-genai": "0.1.6",
